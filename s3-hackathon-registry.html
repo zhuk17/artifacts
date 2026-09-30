@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Samples / s3-hackathon-registry</title>
+<style>
+:root{--ink:#15181d;--muted:#5b6470;--line:#e3e7ec;--accent:#0f6f5c}
+*{box-sizing:border-box}body{margin:0;font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink)}
+.layout{display:flex;gap:28px;max-width:1080px;margin:0 auto;padding:28px 20px 64px}
+nav{width:210px;flex:none;border-right:1px solid var(--line);padding-right:16px}
+nav b{display:block;font-size:15px;margin-bottom:10px}
+nav a{display:block;color:var(--muted);text-decoration:none;font-size:14px;padding:3px 0}
+nav a.on{color:var(--accent);font-weight:600}
+main{flex:1;min-width:0}h1{font-size:26px;margin:0 0 12px}h2{font-size:19px;margin:28px 0 8px}h3{font-size:16px;margin:22px 0 6px}
+p,li{max-width:72ch}code{background:#f3f6f8;padding:1px 4px;border-radius:4px;font-size:14px}
+pre{background:#f3f6f8;padding:10px 12px;border-radius:8px;overflow:auto}pre code{background:none;padding:0}
+table{border-collapse:collapse;width:100%;margin:12px 0}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;font-size:15px}
+th{background:#f3f6f8}a{color:var(--accent)}hr{border:none;border-top:1px solid var(--line);margin:24px 0}
+</style>
+</head>
+<body>
+<div class="layout"><nav><a href="README.html">README</a><a href="s1-facegate-docs.html">s1-facegate-docs</a><a href="s2-stryde-landing.html">s2-stryde-landing</a><a href="s3-hackathon-registry.html" class="on">s3-hackathon-registry</a></nav><main>
+<h1>S-3 — Dataset cleaning sample: ETHGlobal project registry (10 of 30 rows)</h1>
+<p>SAMPLE — capability demo by FreelanceWorker, 2026-09-27. Source: GitHub Search API, <code>topic:ethglobal created:&gt;2026-03-01</code>, fetched 2026-09-27 (65 matches, first 30 taken, 10 shown). Public metadata only. Full pack = all rows, all fields, CSV + notes.</p>
+<h2>Before — what arrives raw</h2>
+<p>Typical defects in this feed (each present in the shown rows):</p>
+<ul><li><strong>Missing license</strong> on 3 of 14 sampled repos (<code>null</code> in API) — a legal blocker if the list feeds a BD or research pipeline.</li><li><strong>Missing homepage</strong> on 2 of 14; one "homepage" just points back to the repo README; one has a trailing slash.</li><li><strong>Event name written five ways</strong>: <code>ETHGlobal Tokyo 2026</code> in prose, <code>ethglobal-tokyo</code>, <code>ethonline2026</code>, <code>ethglobal-2026</code>, <code>ethglobal-openagents-2026</code> in topics, or absent.</li><li><strong>Descriptions mix product, sponsors and pitch</strong>: one row buries what the thing <em>does</em> under four sponsor names; another starts with a lowercase brand and an em-dash slogan.</li><li><strong>Chain/platform</strong> never appears as a field — it must be inferred from topics + description, and sometimes it genuinely isn't there.</li><li><strong>Repo names lie</strong>: <code>a42x/ETHGlobalTokyo2026</code> contains "MynaAgent"; <code>Access0x1/Access0x1</code> is a duplicate-name org.</li></ul>
+<h2>After — cleaned 10 rows</h2>
+<table><thead><tr><th>Project</th><th>What it does (one line)</th><th>Category</th><th>Chain / key infra</th><th>License</th><th>Live link</th><th>Event</th><th>Last push</th></tr></thead><tbody><tr><td>Waterline</td><td>Verifies rented GPUs deliver the chip and speed you pay for; verdicts on ENS</td><td>Infra verification</td><td>Ethereum Sepolia, Curvegrid</td><td>⚠ none declared</td><td>waterline-eth.vercel.app</td><td>Tokyo 2026</td><td>2026-09-27</td></tr><tr><td>Kagi Wallet</td><td>Threshold wallet giving AI agents their own spending key, never yours</td><td>Wallet security</td><td>MPC (chain n/s)</td><td>⚠ none declared</td><td>kagiwallet.com</td><td>n/s</td><td>2026-09-27</td></tr><tr><td>MynaAgent</td><td>In-wallet AI agent claims JP public benefits with a ZK age proof, paid in JPYC</td><td>Identity / agents</td><td>Polygon, Noir, Groth16</td><td>Apache-2.0</td><td>ethglobal showcase page</td><td>Tokyo 2026</td><td>2026-09-26</td></tr><tr><td>EQLTY Desk</td><td>Seven AI agents trade tokenized stocks inside user-granted limits</td><td>Agent trading</td><td>Robinhood Chain, Uniswap V4</td><td>MIT</td><td>⚠ none</td><td>Online 2026</td><td>2026-09-26</td></tr><tr><td>DAS Busters</td><td>Proves single status to a dating app via ZK, no data disclosed</td><td>Identity / ZK</td><td>ZK stack, World ID (chain n/s)</td><td>GPL-3.0</td><td>das-busters.vercel.app</td><td>Tokyo 2026</td><td>2026-09-26</td></tr><tr><td>AntiScalper Protocol</td><td>Human-verified purchasing of limited physical drops when bots can buy too</td><td>Commerce</td><td>Sui, x402</td><td>MIT</td><td>⚠ none</td><td>Tokyo 2026</td><td>2026-09-26</td></tr><tr><td>Tenjō</td><td>Ticket-lottery entry system with pity weighting; one human one entry</td><td>Consumer dApp</td><td>Sui, Move, passkeys</td><td>MIT</td><td>tenjo-azure.vercel.app</td><td>n/s</td><td>2026-09-26</td></tr><tr><td>Hanvil</td><td>Local Hedera node in one Rust binary; boots in ms, keeps rejected txs</td><td>Dev tooling</td><td>Hedera/Hiero</td><td>MIT</td><td>(= repo README)</td><td>Online 2026</td><td>2026-09-26</td></tr><tr><td>StoikovHook</td><td>Uniswap v4 hook charging arbitrageurs market-making-style fees</td><td>DeFi</td><td>Ethereum, Foundry</td><td>MIT</td><td>ethglobal showcase page</td><td>n/s</td><td>2026-09-26</td></tr><tr><td>OpenBook</td><td>Data marketplace for AI agents — fresh data or refund</td><td>Data / payments</td><td>Arc, USDC, MCP</td><td>MIT</td><td>openbook.litai.ca</td><td>Online 2026</td><td>2026-09-20</td></tr></tbody></table>
+<h2>Method notes (the actual deliverable)</h2>
+<p>1. <strong>Source line preserved</strong>: query string, fetch timestamp, total/matched counts recorded above the table so any number is reproducible. 2. <strong>Description split, not rewritten</strong>: every raw description decomposes into function / event tag / sponsor noise. Only the function survives into "What it does"; nothing invented — if the raw text can't support a one-liner, the cell says <code>n/s</code>. 3. <strong>Controlled vocabulary for events</strong>: <code>ethglobal-tokyo</code>, <code>ETHGlobal Tokyo 2026</code>, <code>ethglobal-2026</code> → one canonical value; ambiguous or absent → <code>n/s</code>, never guessed. 4. <strong>Chain inferred with provenance</strong>: taken from topics ∩ description; conflicts resolved toward the description; genuinely absent → <code>n/s</code>. 5. <strong>License gaps are flags, not blanks</strong>: <code>⚠ none declared</code> stays visible in the main table — hiding them would destroy the point of the column.</p>
+<table><thead><tr><th>6. <strong>Homepage normalized</strong>: scheme and trailing slash stripped, then classified `demo</th><th>showcase</th><th>repo`; a repo-link masquerading as a homepage is labeled as such instead of deleted.</th></tr></thead><tbody></tbody></table>
+<p>7. <strong>Category from a fixed 12-value list</strong> (agents, DeFi, identity/ZK, infra, dev tooling, consumer, commerce, data, wallet security, gaming, RWA, other) assigned from function text — free-text tags are where datasets go to die. 8. <strong>Nothing silently dropped</strong>: raw fields stay in an adjacent sheet; the clean table is a view, so every cell can be audited back to source.</p>
+<h2>What the full $50–100 pack adds</h2>
+<p>All 30–65 rows · CSV + cleaned-sheet format · dedupe across forks/orgs · contact-handle column · weekly-refresh option.</p>
+</main></div>
+</body>
+</html>

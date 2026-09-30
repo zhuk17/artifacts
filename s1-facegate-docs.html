@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Samples / s1-facegate-docs</title>
+<style>
+:root{--ink:#15181d;--muted:#5b6470;--line:#e3e7ec;--accent:#0f6f5c}
+*{box-sizing:border-box}body{margin:0;font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink)}
+.layout{display:flex;gap:28px;max-width:1080px;margin:0 auto;padding:28px 20px 64px}
+nav{width:210px;flex:none;border-right:1px solid var(--line);padding-right:16px}
+nav b{display:block;font-size:15px;margin-bottom:10px}
+nav a{display:block;color:var(--muted);text-decoration:none;font-size:14px;padding:3px 0}
+nav a.on{color:var(--accent);font-weight:600}
+main{flex:1;min-width:0}h1{font-size:26px;margin:0 0 12px}h2{font-size:19px;margin:28px 0 8px}h3{font-size:16px;margin:22px 0 6px}
+p,li{max-width:72ch}code{background:#f3f6f8;padding:1px 4px;border-radius:4px;font-size:14px}
+pre{background:#f3f6f8;padding:10px 12px;border-radius:8px;overflow:auto}pre code{background:none;padding:0}
+table{border-collapse:collapse;width:100%;margin:12px 0}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;font-size:15px}
+th{background:#f3f6f8}a{color:var(--accent)}hr{border:none;border-top:1px solid var(--line);margin:24px 0}
+</style>
+</head>
+<body>
+<div class="layout"><nav><a href="README.html">README</a><a href="s1-facegate-docs.html" class="on">s1-facegate-docs</a><a href="s2-stryde-landing.html">s2-stryde-landing</a><a href="s3-hackathon-registry.html">s3-hackathon-registry</a></nav><main>
+<h1>S-1 — Docs rewrite sample: FaceGate quickstart</h1>
+<p>Sample docs work by FreelanceWorker, 2026-09-27. Source: [omsant02/FaceGate](https://github.com/omsant02/FaceGate) @ <code>80a1ed8</code> (ETHGlobal ETHOnline 2026). Original README quoted briefly with attribution; everything below Part 2 is newly written.</p>
+<p>Target page: the developer quickstart for <code>@facegate/sdk</code>.</p>
+<h2>Part 1 — What is actually wrong (each item verifiable)</h2>
+<p>1. <strong>No license.</strong> The repo contains no LICENSE file and GitHub reports <code>license: null</code>. An SDK whose npm package has no license cannot be legally integrated by any subscription platform — the exact customers it targets. This is a revenue bug, not a docs nit. 2. <strong>Internal artifact linked as documentation.</strong> The README sends readers to <code>FEEDBACK.md</code> ("a full analysis of why this friction is intentional") — a hackathon judging document, not user docs. 3. <strong>The core flow is documented backwards.</strong> The login snippet calls <code>gate.enroll()</code> on every login; the docs then apologize in a footnote ("We know this looks like enrollment every login — it isn't"). When the API name and the explanation fight each other, the reader stops trusting both. 4. <strong>The failure path — the product's whole value — is undocumented.</strong> What happens when faces don't match? What error does <code>confirm()</code> throw, what should the app show, can the user retry, how many times? Nothing. The happy path works; the path that <em>is the product</em> is missing. 5. <strong>The wasm footgun is buried.</strong> "Critical: bundler configuration" sits near the bottom of a 10 KB README. A Next.js integrator hits it at minute two, not hour two. 6. <strong>SDK reference has no contract.</strong> A table of method names with prose descriptions — no signatures, no types, no return shapes, no error cases. A developer cannot write code against it without opening the source.</p>
+<h2>Part 2 — Proposed quickstart (new text)</h2>
+<h3>Prerequisites</h3>
+<ul><li>Node 18+, a bundler that handles WASM (see [WASM setup](#wasm-setup) — do this first, it breaks builds silently)</li><li>A FaceGate API key from the [dashboard](https://face-gate-ecru.vercel.app)</li><li>Users need the World app with a World ID</li></ul>
+<h3>Install</h3>
+<pre><code>npm install @facegate/sdk</code></pre>
+<h3>The model in one paragraph</h3>
+<p>Each account gets one enrolled nullifier — a cryptographic fingerprint of one face, created on the user's device, never a photo. At signup you store that pairing. At every login you check the presented face against the stored nullifier. Match → same person. Mismatch → different person, block. Cross-app unlinkability: the same face produces different nullifiers per app.</p>
+<h3>Signup: enroll once</h3>
+<pre><code>import { FaceGate } from "@facegate/sdk";
+
+const gate = new FaceGate({ apiKey: process.env.FACEGATE_API_KEY! });
+
+// During signup only:
+const { success, nullifier } = await gate.enroll({ userId });
+if (!success) throw new Error("enrollment failed — see error table below");
+// Store `nullifier` against `userId` in your database. This is your only record.</code></pre>
+<h3>Login: gate every session</h3>
+<pre><code>const result = await gate.confirm({ userId, expectedNullifier: stored });
+
+switch (result.status) {
+  case "match":     grantSession(result.userId); break;
+  case "mismatch":  denySession("This account is enrolled to a different face."); break;
+  case "not_found": redirect("complete-enrollment"); break; // user reinstalled World app
+  default:          failClosed(); // never fail open on unknown status
+}</code></pre>
+<h3>Failure modes</h3>
+<table><thead><tr><th>Status</th><th>Meaning</th><th>User sees</th><th>Retry?</th></tr></thead><tbody><tr><td><code>match</code></td><td>Same face as enrollment</td><td>normal login</td><td>—</td></tr><tr><td><code>mismatch</code></td><td>Different face presented</td><td>generic "verification failed"; log internally</td><td>yes, own face only</td></tr><tr><td><code>not_found</code></td><td>No nullifier stored</td><td>"finish setting up verification"</td><td>yes, re-enroll</td></tr><tr><td>network/API error</td><td>FaceGate server unreachable</td><td>"try again" — <strong>treat as failure, do not grant access</strong></td><td>yes, backoff</td></tr></tbody></table>
+<p>Design rule: every non-<code>match</code> outcome denies access. A verification library that fails open is a verification library that is off.</p>
+<h3>WASM setup (do before first build)</h3>
+<p><code>@worldcoin/idkit-core</code> ships WASM. Without config, Vite/Next builds silently produce a broken hash module. For Next.js add to <code>next.config.js</code>:</p>
+<pre><code>module.exports = { webpack: (config) =&gt; { config.experiments = { ...config.experiments, asyncWebAssembly: true }; return config; } };</code></pre>
+<p>Symptom if skipped: runtime error mentioning <code>wasm</code> or <code>WebAssembly.instantiate</code>.</p>
+<h3>Re-enrollment policy (decide this before launch)</h3>
+<p>A user can re-enroll by design (new phone, lost World account). Your anti-sharing goal needs a rule: e.g. max 1 re-enrollment per 90 days, or re-enrollment requires a second factor. FaceGate stores nullifiers; the policy is yours.</p>
+<h2>Part 3 — What the full $80 pack adds</h2>
+<p>API reference with real signatures and error unions · server-side endpoint docs · threat model (what the API key can and cannot do, key rotation) · LICENSE triage and file (this alone unblocks integrators) · troubleshooting index.</p>
+</main></div>
+</body>
+</html>

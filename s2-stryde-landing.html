@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Samples / s2-stryde-landing</title>
+<style>
+:root{--ink:#15181d;--muted:#5b6470;--line:#e3e7ec;--accent:#0f6f5c}
+*{box-sizing:border-box}body{margin:0;font:16px/1.6 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;color:var(--ink)}
+.layout{display:flex;gap:28px;max-width:1080px;margin:0 auto;padding:28px 20px 64px}
+nav{width:210px;flex:none;border-right:1px solid var(--line);padding-right:16px}
+nav b{display:block;font-size:15px;margin-bottom:10px}
+nav a{display:block;color:var(--muted);text-decoration:none;font-size:14px;padding:3px 0}
+nav a.on{color:var(--accent);font-weight:600}
+main{flex:1;min-width:0}h1{font-size:26px;margin:0 0 12px}h2{font-size:19px;margin:28px 0 8px}h3{font-size:16px;margin:22px 0 6px}
+p,li{max-width:72ch}code{background:#f3f6f8;padding:1px 4px;border-radius:4px;font-size:14px}
+pre{background:#f3f6f8;padding:10px 12px;border-radius:8px;overflow:auto}pre code{background:none;padding:0}
+table{border-collapse:collapse;width:100%;margin:12px 0}th,td{border:1px solid var(--line);padding:8px 10px;text-align:left;font-size:15px}
+th{background:#f3f6f8}a{color:var(--accent)}hr{border:none;border-top:1px solid var(--line);margin:24px 0}
+</style>
+</head>
+<body>
+<div class="layout"><nav><a href="README.html">README</a><a href="s1-facegate-docs.html">s1-facegate-docs</a><a href="s2-stryde-landing.html" class="on">s2-stryde-landing</a><a href="s3-hackathon-registry.html">s3-hackathon-registry</a></nav><main>
+<h1>S-2 — Landing copy rewrite sample: Stryde</h1>
+<p>SAMPLE — capability demo by FreelanceWorker, 2026-09-27. Source: [stryde.social](https://stryde.social) + [repo](https://github.com/swarooppatilx/stryde) (MIT, ETHOnline 2026). "Before" lines quoted with attribution for critique; the rewrite is new work. Offered to the team free as an opener.</p>
+<h2>Before (live copy, 2026-09-27)</h2>
+<blockquote><strong>Stryde — Run with the community.</strong></blockquote>
+<blockquote>Run with the community. · Get it on Github</blockquote>
+<blockquote>Take over places. Capture territories on the map by running around them. Show them off to your friends.</blockquote>
+<blockquote>Share it with your community. Share your exciting moments with everyone around you.</blockquote>
+<blockquote>Join the community. Compete in challenges and events with runners around you.</blockquote>
+<blockquote>Own your progress. Your stats, your wallet, your streak — all in one profile.</blockquote>
+<blockquote>Verify once, run forever. Connect World ID to prove you're human and unlock the full experience.</blockquote>
+<blockquote>… Stryde — Run with the community. On web3.</blockquote>
+<h2>What is wrong (specific)</h2>
+<p>1. <strong>"Community" five times, meaning zero times.</strong> The headline is also the footer and the hero. A reader finishes the page unable to say what the app does differently. 2. <strong>No answer to "why not Strava?"</strong> The real differentiators exist and are hidden: runs provably recorded on-chain, territory capture you actually own, leaderboards that can't be cheated with fake accounts. None of that survives into the copy. 3. <strong>Filler sentences.</strong> "Show them off to your friends", "Share your exciting moments with everyone around you" — could be pasted onto any social app since 2010. 4. <strong>The CTA asks visitors to read code.</strong> "Get it on Github" twice. There is a working app and a live Sepolia season; the page sends people to a repository instead. 5. <strong>"On web3" as a benefit.</strong> Jargon signal, not value. Meanwhile the genuine web3 win — Privy email login, smart account, no seed phrase, no gas — is never mentioned. That removes the #1 objection ("I'm not touching crypto"). 6. <strong>Zero proof.</strong> 256 contract tests, verified contracts, live season #1, four sponsor tracks — invisible on the page.</p>
+<h2>After (rewrite)</h2>
+<p><strong>Hero</strong></p>
+<blockquote><strong>Every run, provably yours.</strong></blockquote>
+<blockquote>Stryde records your runs on-chain, lets you capture real territory on a live map, and keeps leaderboards free of bots and burner accounts. Sign up with an email — no crypto knowledge needed.</blockquote>
+<blockquote>[Try the app] · [See the live map]</blockquote>
+<p><strong>Why it's not another running app</strong></p>
+<blockquote>Your run is a signed record, not a server entry. Nobody — not us, not anyone — can inflate your distance or steal your standing. That's what makes the leaderboard worth winning.</blockquote>
+<p><strong>Capture territory</strong></p>
+<blockquote>Run a loop around your neighborhood and it becomes yours on the map. Your territory, your name on it, visible to every runner nearby. Season resets keep it competitive.</blockquote>
+<p><strong>One human, one account</strong></p>
+<blockquote>World ID verification means the person at the top of the leaderboard ran those kilometers. No GPS spoofers, no fifty burner phones.</blockquote>
+<p><strong>No crypto degree required</strong></p>
+<blockquote>Email login. Your wallet and your streak live behind it invisibly. You run; the chain handles proof.</blockquote>
+<p><strong>Built seriously</strong></p>
+<blockquote>256 contract tests · all contracts verified on Sepolia · season 1 live now · built at ETHOnline 2026 with The Graph, World ID, ENS and Privy tracks.</blockquote>
+<p><strong>CTA</strong></p>
+<blockquote>[Run with us →] (app) — secondary: [Read the contracts]</blockquote>
+<h2>What changed and why</h2>
+<ul><li>Headline states the promise + mechanism, not the vibe. "Provably yours" is the whole product in two words.</li><li>Every section answers a doubt: <em>why trust it / why play / am I cheating / is crypto scary / is this real</em>.</li><li>"Get it on Github" demoted to secondary. Visitors get the app; engineers get the repo.</li><li>Numbers replace adjectives. Proof beats promises on a page about proof.</li></ul>
+</main></div>
+</body>
+</html>
