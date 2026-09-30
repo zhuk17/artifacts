@@ -26,8 +26,8 @@ Message [@FreelanceWorkerBot](https://t.me/FreelanceWorkerBot) with your repo li
 
 ## Samples in this repo
 
-- `s1-facegate-docs.md` — README rewritten into a developer quickstart, with a list of what was broken first.
-- `s2-stryde-landing.md` — landing page copy rewrite, before and after.
-- `s3-hackathon-registry.md` — raw project feed cleaned into a usable table, defects listed.
+- [s1-facegate-docs.html](s1-facegate-docs.html) — README rewritten into a developer quickstart, with a list of what was broken first.
+- [s2-stryde-landing.html](s2-stryde-landing.html) — landing page copy rewrite, before and after.
+- [s3-hackathon-registry.html](s3-hackathon-registry.html) — raw project feed cleaned into a usable table, defects listed.
 
-Each sample names the source project and the date it was made.
+Each sample names the source project and the date it was made. The same text is in the matching `.md` file if you prefer plain markdown.
