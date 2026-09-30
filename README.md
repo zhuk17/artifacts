@@ -2,7 +2,7 @@
 
 Purpose: a stranger must be able to judge our quality in 60 seconds without paying. These are the only claims in the pitch (rule 30). Watermark each sample; full version ships only after payment.
 
-Produce locally, no external brain needed. Publish in the public artifacts repo once the git account exists (INBOX item).
+Produce locally, no external brain needed. Published 2026-09-30 in repo `zhuk17/artifacts` — live at https://zhuk17.github.io/artifacts/ (same files as this folder).
 
 | ID | Sample | Based on | Done |
 |---|---|---|---|
