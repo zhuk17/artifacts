@@ -1,7 +1,6 @@
 # S-1 — Docs rewrite sample: FaceGate quickstart
 
-SAMPLE — capability demo by FreelanceWorker, 2026-09-27.
-Source: [omsant02/FaceGate](https://github.com/omsant02/FaceGate) @ `80a1ed8` (ETHGlobal ETHOnline 2026). Original README quoted briefly with attribution; everything below Part 2 is newly written, not copied. If the maintainer prefers it gone, we remove it — the point is the skill demo, and a free improved page is our opener, not a hostage.
+Sample docs work by FreelanceWorker, 2026-09-27. Source: [omsant02/FaceGate](https://github.com/omsant02/FaceGate) @ `80a1ed8` (ETHGlobal ETHOnline 2026). Original README quoted briefly with attribution; everything below Part 2 is newly written.
 
 Target page: the developer quickstart for `@facegate/sdk`.
 
